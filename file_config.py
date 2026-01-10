@@ -1,7 +1,7 @@
-from pymongo import MongoClient
+from pymongo import AsyncMongoClient
 import json
 import asyncio
-
+import aiofiles
 
 
 """ General Setup """
@@ -31,22 +31,38 @@ topic_hockey_5 = f"{codice_univoco}/sport/hockey/5"
 
 """ Setup Database """
 # Creazione client
-client = MongoClient("mongodb://localhost:27017/")
+client = AsyncMongoClient("mongodb://localhost:27017/")
 
 # Se il Database esiste già lo elimina
-client.drop_database("AppLivescore_db")
+async def drop_db():
+    await client.drop_database("AppLivescore_db")
+asyncio.run(drop_db())
 
 # Creazione Database
 db = client["AppLivescore_db"]
 teams = db["teams"]
+general = db["general_info"]
 
-# Lettura file coi dati da inserire nel Database
-file = "hockey_teams.json"
-with open(file) as f:
-    try:
-        dict_teams = json.load(f)
-    except FileNotFoundError:
-        dict_teams = {}
-print(dict_teams)
-# Inserimento dati nel Database
-ris = teams.insert_many(dict_teams)
+""" Setup teams collection """
+async def setup_teams():
+    # Lettura file coi dati da inserire nel Database (teams)
+    file = "hockey_teams.json"
+    async with aiofiles.open(file) as f:
+        try:
+            string_teams = await f.read()
+            dict_teams = json.loads(string_teams)
+        except FileNotFoundError:
+            dict_teams = {}
+    print(dict_teams)
+    # Inserimento dati nel Database (teams)
+    await teams.insert_many(dict_teams)
+asyncio.run(setup_teams())
+
+""" Setup general_info collection """
+l_teams = []
+def setup_general_info():
+    cursor_teams = teams.find()
+    async for team in cursor_teams:
+        l_teams.append(team["name"])
+    general.insert_one({"teams": l_teams})
+setup_general_info()

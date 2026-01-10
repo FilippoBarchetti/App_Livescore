@@ -45,14 +45,10 @@ async def start_threads(threads_number):
         time.sleep(random.randint(1, 10))
         t = Publisher(
             stop_event,
-            topic_list[i],
+            topic_list[i],)
 
 if __name__ == "__main__":
-    a
 
-
-
-                             )
 
     # Loop e stop
     try:

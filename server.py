@@ -2,6 +2,7 @@ import sys
 import asyncio
 import threading
 import random
+import time
 
 # Ho dovuto specificare questa condizione perchè
 # altrimenti, usando Windows, vi erano problemi
@@ -14,7 +15,7 @@ import logging
 import tornado.web
 import tornado.websocket
 #import aiomqtt
-from file_config import simulation_speed, teams
+from file_config import simulation_speed, teams, l_teams
 # Import broker e topics
 # from file_config import broker, topic_hockey_1, topic_hockey_2, topic_hockey_3, topic_hockey_4, topic_hockey_5
 
@@ -77,20 +78,22 @@ async def mqtt_listener():
 """
 
 class MatchRandomizer(threading.Thread):
-    def __init__(self, i, stop_event):
+    def __init__(self, i, stop_event, team1, team2):
         super().__init__(name=f"match_{i}")
         self.stop_event = stop_event
+        self.team1 = team1
+        self.team2 = team2
+        self.seconds = 0
 
     def run(self):
         while not self.stop_event.is_set():
-            value = round(random.uniform(18, 40), 2)
-
             payload = {
-                "sensor": self.sensor,
-                "value": value,
-                "unit": self.unit,
-                "time_stamp": datetime.datetime.now().strftime("%H:%M:%S")
+                "time": f"{self.seconds//60}:{self.seconds%60}",
+                "teams": f"{self.team1} vs {self.team2}"
             }
+            time.sleep(1000/simulation_speed)
+            self.seconds += 1
+
 
 """ MAIN """
 async def main():
@@ -109,26 +112,29 @@ async def main():
 
     #asyncio.create_task(mqtt_listener())
 
-    cursor_teams = await teams.find_one({"name"})
+    cursor_teams = await teams.find({"name"})
 
     await asyncio.Event().wait()
 
 """ START THREADS """
-async def start_threads(n_threads, stop_event):
+async def start_threads(n_threads):
     # Setup e start threads
     for i in range(n_threads):
-        await asyncio.sleep(random.randint(100, 10000)//simulation_speed)
-        goalie = await teams.find_one({"name": "Sara Neri"})
+        await asyncio.sleep(random.randint(1000, 10000)//simulation_speed)
+        team1 = l_teams.pop(random.randint(0, l_teams - 1))
+        team2 = l_teams.pop(random.randint(0, l_teams - 1))
 
         t_match = MatchRandomizer(
             i + 1,
-            stop_event,)
+            stop_event,
+            team1,
+            team2
+        )
 
 
 
 if __name__ == "__main__":
-    list_teams = []
     stop_event = threading.Event()
     asyncio.run(main())
-    asyncio.run(start_threads(8, stop_event))
+    asyncio.run(start_threads(8))
 
