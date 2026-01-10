@@ -1,449 +1,449 @@
 [
-   {
-      "nome": "Asiago Vipers",
-      "città": "Asiago",
-      "giocatori": {
-         "portieri": [
-            "Stefano Bortoli",
-            "Rudy Rigoni",
-            "Riccardo Santangelo"
-         ],
-         "difensori": [
-            "Steven Bellini",
-            "Robert Calisti",
-            "Lorenzo Casetti",
-            "Francesco Forte",
-            "Michele Forte",
-            "Gregorio Gios",
-            "Gabriele Parini",
-            "Filippo Rigoni"
-         ],
-         "attaccanti": [
-            "Lucas Chiodo",
-            "Luca Cortese",
-            "Lorenzo Ferretti",
-            "Nathan Garau",
-            "Carter Johnson",
-            "Marco Magnabosco",
-            "Giacomo Marcazzan",
-            "Fallou Mbow",
-            "Andrea Miglioranzi",
-            "Raffael Nitz",
-            "Alessandro Parco",
-            "Nicholas Porco",
-            "Andrea Rigoni",
-            "Filippo Rigoni",
-            "Michele Stevan",
-            "Tommaso Traversa",
-            "Ryan Valentini"
-         ]
-      }
-   },
-   {
-      "nome": "Cittadella Hockey Pattinaggio",
-      "città": "Cittadella",
-      "giocatori": {
-         "portieri": [
-            "Alessandro Rossi",
-            "Matteo Bianchi",
-            "Lorenzo Ferrari"
-         ],
-         "difensori": [
-            "Davide Romano",
-            "Emanuele Conti",
-            "Giulio Ricci",
-            "Marco Gallo",
-            "Leonardo Greco",
-            "Simone Rinaldi"
-         ],
-         "attaccanti": [
-            "Federico Marino",
-            "Luca Benedetti",
-            "Tommaso Serra",
-            "Andrea Leone",
-            "Stefano Grassi",
-            "Riccardo Piras",
-            "Mattia Fontana"
-         ]
-      }
-   },
-   {
-      "nome": "Libertas Hockey Forlì",
-      "città": "Forlì",
-      "giocatori": {
-         "portieri": [
-            "Giorgio Moretti",
-            "Matteo Esposito",
-            "Simone Barbieri"
-         ],
-         "difensori": [
-            "Alberto Vitali",
-            "Lorenzo Basso",
-            "Francesco Costa",
-            "Andrea Marchetti",
-            "Riccardo Pagani",
-            "Giovanni Neri"
-         ],
-         "attaccanti": [
-            "Fabio De Luca",
-            "Luca Vitali",
-            "Marco Gentile",
-            "Matteo Sala",
-            "Tommaso Gatti",
-            "Riccardo Lombardi"
-         ]
-      }
-   },
-   {
-      "nome": "Legnaro PGS2000",
-      "città": "Legnaro",
-      "giocatori": {
-         "portieri": [
-            "Andrea Toni",
-            "Matteo Santini",
-            "Simone Pavan"
-         ],
-         "difensori": [
-            "Lorenzo Riva",
-            "Marco Serafini",
-            "Davide Toni",
-            "Filippo Barbieri",
-            "Gabriele Lombardo",
-            "Francesco Villa"
-         ],
-         "attaccanti": [
-            "Luca Donati",
-            "Tommaso Ferri",
-            "Federico Greco",
-            "Andrea Rossi",
-            "Simone Neri",
-            "Riccardo Vitali"
-         ]
-      }
-   },
-   {
-      "nome": "Quanta Club Milano",
-      "città": "Milano",
-      "giocatori": {
-         "portieri": [
-            "Marco Colombo",
-            "Alessandro Villa",
-            "Riccardo Gatti"
-         ],
-         "difensori": [
-            "Lorenzo Esposito",
-            "Andrea Ferrari",
-            "Davide Bianchi",
-            "Simone Marino",
-            "Federico Rinaldi",
-            "Giorgio Serra"
-         ],
-         "attaccanti": [
-            "Matteo Benedetti",
-            "Tommaso Leone",
-            "Riccardo Costa",
-            "Andrea Romano",
-            "Filippo Greco",
-            "Luca Fontana"
-         ]
-      }
-   },
-   {
-      "nome": "CV Skating",
-      "città": "CV",
-      "giocatori": {
-         "portieri": [
-            "Giorgio Pavan",
-            "Matteo Neri",
-            "Alessandro Leone"
-         ],
-         "difensori": [
-            "Francesco Riva",
-            "Lorenzo Vitali",
-            "Andrea Costa",
-            "Marco Conti",
-            "Davide De Luca",
-            "Simone Fontana"
-         ],
-         "attaccanti": [
-            "Tommaso Romano",
-            "Federico Bianchi",
-            "Luca Gatti",
-            "Riccardo Serra",
-            "Stefano Rinaldi",
-            "Andrea Lombardi"
-         ]
-      }
-   },
-   {
-      "nome": "Edera Trieste",
-      "città": "Trieste",
-      "giocatori": {
-         "portieri": [
-            "Matteo Gatti",
-            "Simone Piras",
-            "Alessandro Moretti"
-         ],
-         "difensori": [
-            "Lorenzo Ferri",
-            "Davide Grassi",
-            "Francesco Leone",
-            "Andrea Riva",
-            "Gabriele Romano",
-            "Riccardo Esposito"
-         ],
-         "attaccanti": [
-            "Tommaso Lombardi",
-            "Federico Villa",
-            "Luca Rinaldi",
-            "Simone Costa",
-            "Matteo Vitali",
-            "Andrea Gallo"
-         ]
-      }
-   },
-   {
-      "nome": "Vicenza Hockey",
-      "città": "Vicenza",
-      "giocatori": {
-         "portieri": [
-            "Marco Piras",
-            "Alessandro Riva",
-            "Simone Villa"
-         ],
-         "difensori": [
-            "Lorenzo Moretti",
-            "Davide Leone",
-            "Andrea Costa",
-            "Gabriele Ferri",
-            "Francesco Lombardi",
-            "Matteo Romano"
-         ],
-         "attaccanti": [
-            "Tommaso Bianchi",
-            "Federico Gatti",
-            "Luca Rinaldi",
-            "Riccardo Pavan",
-            "Stefano Esposito",
-            "Andrea Grassi"
-         ]
-      }
-   },
-   {
-      "nome": "HC Granducato",
-      "città": "Granducato",
-      "giocatori": {
-         "portieri": [
-            "Alessandro Gatti",
-            "Matteo Romano",
-            "Simone Moretti"
-         ],
-         "difensori": [
-            "Lorenzo Esposito",
-            "Davide Ferri",
-            "Francesco Costa",
-            "Andrea Villa",
-            "Gabriele Leone",
-            "Riccardo Serra"
-         ],
-         "attaccanti": [
-            "Tommaso Bianchi",
-            "Federico Rinaldi",
-            "Luca Vitali",
-            "Riccardo Pavan",
-            "Stefano Gatti",
-            "Andrea Lombardi"
-         ]
-      }
-   },
-   {
-      "nome": "CUS Verona",
-      "città": "Verona",
-      "giocatori": {
-         "portieri": [
-            "Matteo Leone",
-            "Simone Ferri",
-            "Alessandro Romano"
-         ],
-         "difensori": [
-            "Lorenzo Costa",
-            "Davide Gatti",
-            "Francesco Pavan",
-            "Andrea Rinaldi",
-            "Gabriele Villa",
-            "Riccardo Leone"
-         ],
-         "attaccanti": [
-            "Tommaso Bianchi",
-            "Federico Romano",
-            "Luca Ferri",
-            "Riccardo Costa",
-            "Stefano Riva",
-            "Andrea Gatti"
-         ]
-      }
-   },
-   {
-  "nome": "HC Bolzano",
-  "città": "Bolzano",
-  "giocatori": {
-    "portieri": [
-      "Lukas Hofer",
-      "Marco Unterhofer",
-      "Daniel Mair"
-    ],
-    "difensori": [
-      "Thomas Egger",
-      "Florian Kerschbaumer",
-      "Matteo Rizzi",
-      "Paolo Ferrari",
-      "Andrea Goller",
-      "Nicola Pichler"
-    ],
-    "attaccanti": [
-      "Manuel Mair",
-      "Luca De Zordo",
-      "Simone Ferrari",
-      "Riccardo Oberrauch",
-      "Alessio Runggaldier",
-      "Fabio Rossi",
-      "Davide Pellegrini"
-    ]
+  {
+    "name": "Asiago Vipers",
+    "city": "Asiago",
+    "players": {
+      "goalkeepers": [
+        "Stefano Bortoli",
+        "Rudy Rigoni",
+        "Riccardo Santangelo"
+      ],
+      "defenders": [
+        "Steven Bellini",
+        "Robert Calisti",
+        "Lorenzo Casetti",
+        "Francesco Forte",
+        "Michele Forte",
+        "Gregorio Gios",
+        "Gabriele Parini",
+        "Filippo Rigoni"
+      ],
+      "forwards": [
+        "Lucas Chiodo",
+        "Luca Cortese",
+        "Lorenzo Ferretti",
+        "Nathan Garau",
+        "Carter Johnson",
+        "Marco Magnabosco",
+        "Giacomo Marcazzan",
+        "Fallou Mbow",
+        "Andrea Miglioranzi",
+        "Raffael Nitz",
+        "Alessandro Parco",
+        "Nicholas Porco",
+        "Andrea Rigoni",
+        "Filippo Rigoni",
+        "Michele Stevan",
+        "Tommaso Traversa",
+        "Ryan Valentini"
+      ]
+    }
+  },
+  {
+    "name": "Cittadella Hockey Pattinaggio",
+    "city": "Cittadella",
+    "players": {
+      "goalkeepers": [
+        "Alessandro Rossi",
+        "Matteo Bianchi",
+        "Lorenzo Ferrari"
+      ],
+      "defenders": [
+        "Davide Romano",
+        "Emanuele Conti",
+        "Giulio Ricci",
+        "Marco Gallo",
+        "Leonardo Greco",
+        "Simone Rinaldi"
+      ],
+      "forwards": [
+        "Federico Marino",
+        "Luca Benedetti",
+        "Tommaso Serra",
+        "Andrea Leone",
+        "Stefano Grassi",
+        "Riccardo Piras",
+        "Mattia Fontana"
+      ]
+    }
+  },
+  {
+    "name": "Libertas Hockey Forlì",
+    "city": "Forlì",
+    "players": {
+      "goalkeepers": [
+        "Giorgio Moretti",
+        "Matteo Esposito",
+        "Simone Barbieri"
+      ],
+      "defenders": [
+        "Alberto Vitali",
+        "Lorenzo Basso",
+        "Francesco Costa",
+        "Andrea Marchetti",
+        "Riccardo Pagani",
+        "Giovanni Neri"
+      ],
+      "forwards": [
+        "Fabio De Luca",
+        "Luca Vitali",
+        "Marco Gentile",
+        "Matteo Sala",
+        "Tommaso Gatti",
+        "Riccardo Lombardi"
+      ]
+    }
+  },
+  {
+    "name": "Legnaro PGS2000",
+    "city": "Legnaro",
+    "players": {
+      "goalkeepers": [
+        "Andrea Toni",
+        "Matteo Santini",
+        "Simone Pavan"
+      ],
+      "defenders": [
+        "Lorenzo Riva",
+        "Marco Serafini",
+        "Davide Toni",
+        "Filippo Barbieri",
+        "Gabriele Lombardo",
+        "Francesco Villa"
+      ],
+      "forwards": [
+        "Luca Donati",
+        "Tommaso Ferri",
+        "Federico Greco",
+        "Andrea Rossi",
+        "Simone Neri",
+        "Riccardo Vitali"
+      ]
+    }
+  },
+  {
+    "name": "Quanta Club Milano",
+    "city": "Milano",
+    "players": {
+      "goalkeepers": [
+        "Marco Colombo",
+        "Alessandro Villa",
+        "Riccardo Gatti"
+      ],
+      "defenders": [
+        "Lorenzo Esposito",
+        "Andrea Ferrari",
+        "Davide Bianchi",
+        "Simone Marino",
+        "Federico Rinaldi",
+        "Giorgio Serra"
+      ],
+      "forwards": [
+        "Matteo Benedetti",
+        "Tommaso Leone",
+        "Riccardo Costa",
+        "Andrea Romano",
+        "Filippo Greco",
+        "Luca Fontana"
+      ]
+    }
+  },
+  {
+    "name": "CV Skating",
+    "city": "CV",
+    "players": {
+      "goalkeepers": [
+        "Giorgio Pavan",
+        "Matteo Neri",
+        "Alessandro Leone"
+      ],
+      "defenders": [
+        "Francesco Riva",
+        "Lorenzo Vitali",
+        "Andrea Costa",
+        "Marco Conti",
+        "Davide De Luca",
+        "Simone Fontana"
+      ],
+      "forwards": [
+        "Tommaso Romano",
+        "Federico Bianchi",
+        "Luca Gatti",
+        "Riccardo Serra",
+        "Stefano Rinaldi",
+        "Andrea Lombardi"
+      ]
+    }
+  },
+  {
+    "name": "Edera Trieste",
+    "city": "Trieste",
+    "players": {
+      "goalkeepers": [
+        "Matteo Gatti",
+        "Simone Piras",
+        "Alessandro Moretti"
+      ],
+      "defenders": [
+        "Lorenzo Ferri",
+        "Davide Grassi",
+        "Francesco Leone",
+        "Andrea Riva",
+        "Gabriele Romano",
+        "Riccardo Esposito"
+      ],
+      "forwards": [
+        "Tommaso Lombardi",
+        "Federico Villa",
+        "Luca Rinaldi",
+        "Simone Costa",
+        "Matteo Vitali",
+        "Andrea Gallo"
+      ]
+    }
+  },
+  {
+    "name": "Vicenza Hockey",
+    "city": "Vicenza",
+    "players": {
+      "goalkeepers": [
+        "Marco Piras",
+        "Alessandro Riva",
+        "Simone Villa"
+      ],
+      "defenders": [
+        "Lorenzo Moretti",
+        "Davide Leone",
+        "Andrea Costa",
+        "Gabriele Ferri",
+        "Francesco Lombardi",
+        "Matteo Romano"
+      ],
+      "forwards": [
+        "Tommaso Bianchi",
+        "Federico Gatti",
+        "Luca Rinaldi",
+        "Riccardo Pavan",
+        "Stefano Esposito",
+        "Andrea Grassi"
+      ]
+    }
+  },
+  {
+    "name": "HC Granducato",
+    "city": "Granducato",
+    "players": {
+      "goalkeepers": [
+        "Alessandro Gatti",
+        "Matteo Romano",
+        "Simone Moretti"
+      ],
+      "defenders": [
+        "Lorenzo Esposito",
+        "Davide Ferri",
+        "Francesco Costa",
+        "Andrea Villa",
+        "Gabriele Leone",
+        "Riccardo Serra"
+      ],
+      "forwards": [
+        "Tommaso Bianchi",
+        "Federico Rinaldi",
+        "Luca Vitali",
+        "Riccardo Pavan",
+        "Stefano Gatti",
+        "Andrea Lombardi"
+      ]
+    }
+  },
+  {
+    "name": "CUS Verona",
+    "city": "Verona",
+    "players": {
+      "goalkeepers": [
+        "Matteo Leone",
+        "Simone Ferri",
+        "Alessandro Romano"
+      ],
+      "defenders": [
+        "Lorenzo Costa",
+        "Davide Gatti",
+        "Francesco Pavan",
+        "Andrea Rinaldi",
+        "Gabriele Villa",
+        "Riccardo Leone"
+      ],
+      "forwards": [
+        "Tommaso Bianchi",
+        "Federico Romano",
+        "Luca Ferri",
+        "Riccardo Costa",
+        "Stefano Riva",
+        "Andrea Gatti"
+      ]
+    }
+  },
+  {
+    "name": "HC Bolzano",
+    "city": "Bolzano",
+    "players": {
+      "goalkeepers": [
+        "Lukas Hofer",
+        "Marco Unterhofer",
+        "Daniel Mair"
+      ],
+      "defenders": [
+        "Thomas Egger",
+        "Florian Kerschbaumer",
+        "Matteo Rizzi",
+        "Paolo Ferrari",
+        "Andrea Goller",
+        "Nicola Pichler"
+      ],
+      "forwards": [
+        "Manuel Mair",
+        "Luca De Zordo",
+        "Simone Ferrari",
+        "Riccardo Oberrauch",
+        "Alessio Runggaldier",
+        "Fabio Rossi",
+        "Davide Pellegrini"
+      ]
+    }
+  },
+  {
+    "name": "Hockey Bassano",
+    "city": "Bassano del Grappa",
+    "players": {
+      "goalkeepers": [
+        "Giacomo Zonta",
+        "Marco Cecchin",
+        "Lorenzo Dal Molin"
+      ],
+      "defenders": [
+        "Andrea Stefani",
+        "Filippo Marin",
+        "Matteo Campagnolo",
+        "Davide Baggio",
+        "Riccardo Bellotto",
+        "Simone Bortolotto"
+      ],
+      "forwards": [
+        "Nicola Pozzato",
+        "Federico Crestani",
+        "Alessandro Bordignon",
+        "Marco Mazzon",
+        "Luca Sartori",
+        "Tommaso Pegoraro"
+      ]
+    }
+  },
+  {
+    "name": "Hockey Monleale",
+    "city": "Monleale",
+    "players": {
+      "goalkeepers": [
+        "Matteo Bianchi",
+        "Alessandro Perotti",
+        "Davide Rossi"
+      ],
+      "defenders": [
+        "Federico Bocca",
+        "Lorenzo Pavesi",
+        "Simone Gatti",
+        "Andrea Cattaneo",
+        "Riccardo Ferrero",
+        "Marco Barisone"
+      ],
+      "forwards": [
+        "Tommaso Repetto",
+        "Luca Parodi",
+        "Stefano Traverso",
+        "Nicola Montaldo",
+        "Andrea Delfino",
+        "Filippo Massa"
+      ]
+    }
+  },
+  {
+    "name": "Hockey Valpellice",
+    "city": "Torre Pellice",
+    "players": {
+      "goalkeepers": [
+        "Davide Rossi",
+        "Marco Allione",
+        "Simone Gallo"
+      ],
+      "defenders": [
+        "Matteo Rostagno",
+        "Andrea Peyron",
+        "Luca Ferrero",
+        "Francesco Ribet",
+        "Alessandro Chiappero",
+        "Simone Viale"
+      ],
+      "forwards": [
+        "Gabriele Pascal",
+        "Federico Tron",
+        "Lorenzo Bellone",
+        "Marco Genre",
+        "Davide Perron",
+        "Nicola Lanteri"
+      ]
+    }
+  },
+  {
+    "name": "Hockey Follonica",
+    "city": "Follonica",
+    "players": {
+      "goalkeepers": [
+        "Andrea Mariotti",
+        "Lorenzo Franchi",
+        "Simone Bartolini"
+      ],
+      "defenders": [
+        "Matteo Pagni",
+        "Federico Banini",
+        "Alessandro Bracali",
+        "Riccardo Montigel",
+        "Luca Pagnini",
+        "Marco Masini"
+      ],
+      "forwards": [
+        "Davide Capannini",
+        "Tommaso Giovannelli",
+        "Andrea Masini",
+        "Francesco Mugelli",
+        "Nicola Catania",
+        "Simone Azzolini"
+      ]
+    }
+  },
+  {
+    "name": "Hockey Sarzana",
+    "city": "Sarzana",
+    "players": {
+      "goalkeepers": [
+        "Gabriele Giorgi",
+        "Matteo Corona",
+        "Alessandro Conti"
+      ],
+      "defenders": [
+        "Marco Borsi",
+        "Federico Rossi",
+        "Lorenzo De Rinaldis",
+        "Andrea Marcucci",
+        "Davide Manfredini",
+        "Simone Perroni"
+      ],
+      "forwards": [
+        "Tommaso Illuzzi",
+        "Luca Andreani",
+        "Nicola Borsi",
+        "Riccardo Rossi",
+        "Federico Pace",
+        "Andrea Rubino"
+      ]
+    }
   }
-},
-{
-  "nome": "Hockey Bassano",
-  "città": "Bassano del Grappa",
-  "giocatori": {
-    "portieri": [
-      "Giacomo Zonta",
-      "Marco Cecchin",
-      "Lorenzo Dal Molin"
-    ],
-    "difensori": [
-      "Andrea Stefani",
-      "Filippo Marin",
-      "Matteo Campagnolo",
-      "Davide Baggio",
-      "Riccardo Bellotto",
-      "Simone Bortolotto"
-    ],
-    "attaccanti": [
-      "Nicola Pozzato",
-      "Federico Crestani",
-      "Alessandro Bordignon",
-      "Marco Mazzon",
-      "Luca Sartori",
-      "Tommaso Pegoraro"
-    ]
-  }
-},
-{
-  "nome": "Hockey Monleale",
-  "città": "Monleale",
-  "giocatori": {
-    "portieri": [
-      "Matteo Bianchi",
-      "Alessandro Perotti",
-      "Davide Rossi"
-    ],
-    "difensori": [
-      "Federico Bocca",
-      "Lorenzo Pavesi",
-      "Simone Gatti",
-      "Andrea Cattaneo",
-      "Riccardo Ferrero",
-      "Marco Barisone"
-    ],
-    "attaccanti": [
-      "Tommaso Repetto",
-      "Luca Parodi",
-      "Stefano Traverso",
-      "Nicola Montaldo",
-      "Andrea Delfino",
-      "Filippo Massa"
-    ]
-  }
-},
-{
-  "nome": "Hockey Valpellice",
-  "città": "Torre Pellice",
-  "giocatori": {
-    "portieri": [
-      "Davide Gay",
-      "Marco Allione",
-      "Simone Gallo"
-    ],
-    "difensori": [
-      "Matteo Rostagno",
-      "Andrea Peyron",
-      "Luca Ferrero",
-      "Francesco Ribet",
-      "Alessandro Chiappero",
-      "Simone Viale"
-    ],
-    "attaccanti": [
-      "Gabriele Pascal",
-      "Federico Tron",
-      "Lorenzo Bellone",
-      "Marco Genre",
-      "Davide Perron",
-      "Nicola Lanteri"
-    ]
-  }
-},
-{
-  "nome": "Hockey Follonica",
-  "città": "Follonica",
-  "giocatori": {
-    "portieri": [
-      "Andrea Mariotti",
-      "Lorenzo Franchi",
-      "Simone Bartolini"
-    ],
-    "difensori": [
-      "Matteo Pagni",
-      "Federico Banini",
-      "Alessandro Bracali",
-      "Riccardo Montigel",
-      "Luca Pagnini",
-      "Marco Masini"
-    ],
-    "attaccanti": [
-      "Davide Capannini",
-      "Tommaso Giovannelli",
-      "Andrea Masini",
-      "Francesco Mugelli",
-      "Nicola Catania",
-      "Simone Azzolini"
-    ]
-  }
-},
-{
-  "nome": "Hockey Sarzana",
-  "città": "Sarzana",
-  "giocatori": {
-    "portieri": [
-      "Gabriele Giorgi",
-      "Matteo Corona",
-      "Alessandro Conti"
-    ],
-    "difensori": [
-      "Marco Borsi",
-      "Federico Rossi",
-      "Lorenzo De Rinaldis",
-      "Andrea Marcucci",
-      "Davide Manfredini",
-      "Simone Perroni"
-    ],
-    "attaccanti": [
-      "Tommaso Illuzzi",
-      "Luca Andreani",
-      "Nicola Borsi",
-      "Riccardo Rossi",
-      "Federico Pace",
-      "Andrea Rubino"
-    ]
-  }
-}
 ]

@@ -109,6 +109,7 @@ async def main():
 
     #asyncio.create_task(mqtt_listener())
 
+    cursor_teams = await teams.find_one({"name"})
 
     await asyncio.Event().wait()
 
@@ -121,11 +122,12 @@ async def start_threads(n_threads, stop_event):
 
         t_match = MatchRandomizer(
             i + 1,
-            stop_event,
+            stop_event,)
 
 
 
 if __name__ == "__main__":
+    list_teams = []
     stop_event = threading.Event()
     asyncio.run(main())
     asyncio.run(start_threads(8, stop_event))
