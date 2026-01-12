@@ -4,30 +4,39 @@
     <meta charset="UTF-8">
     <title>Live Hockey Matches</title>
     <style>
-        body {
-            background-color: #0B2A33;
-            margin: 0;
-        }
-        .div_title {
-            background-color: #05161C;
-            padding: 2%;
-            margin-bottom: 4%;
-        }
-        .div_match {
-            margin: 0 auto;
-            margin-top: 1%;
-            width: 60%;
-            padding: 0.1%;
-            border-radius: 20px;
-            background-color: #05161C;
-        }
-        h1 {
-            color: white;
-            text-align: center;
-        }
+        <link rel="stylesheet" href="../App_Livescore/templates/styles.css">
     </style>
 </head>
 <body>
+    <script>
+        let socket = null;
+
+        document.getElementById("start").onmessage = () => {
+            socket = new WebSocket("ws://localhost:8888/ws");
+
+            socket.onopen = () => {
+                console.log("WebSocket aperto");
+                document.getElementById("start").disabled = true;
+                document.getElementById("stop").disabled = false;
+            };
+
+            socket.onmessage = (event) => {
+                const data = JSON.parse(event.data);
+                document.getElementById("output").innerText =
+                    "Timestamp da server: " + data.timestamp;
+            };
+
+            socket.onclose = () => {
+                console.log("WebSocket chiuso");
+            };
+        };
+
+        document.getElementById("stop").onclick = () => {
+            socket.close();
+            document.getElementById("start").disabled = false;
+            document.getElementById("stop").disabled = true;
+        };
+    </script>
     <div class="div_title">
         <h1 class="title">Live Hockey Inline Matches Italy</h1>
     </div>

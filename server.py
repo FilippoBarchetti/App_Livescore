@@ -19,6 +19,7 @@ from file_config import simulation_speed, teams, general, l_teams
 # la lista è vuota ma quando terminano tutti sarà riempita con i nomi dei vincitori, quindi
 # la sua lunghezza sarà dimezzata
 l_winners = l_teams
+stop_event = threading.Event()
 
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
@@ -31,6 +32,7 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 
     def open(self):
         print("WebSocket aperto")
+
 
     def on_close(self):
         print("WebSocket chiuso")
@@ -66,6 +68,8 @@ class MasterThread(threading.Thread):
             n_threads /= 2
             local_l_teams = general.find({"teams"})
             for i in range(n_threads):
+                ws.write({})
+
                 team1 = l_winners.pop(random.randint(0, l_teams - 1))
                 team2 = l_winners.pop(random.randint(0, l_teams - 1))
 
@@ -103,20 +107,10 @@ async def main():
     app.listen(8888)
     print("Server Tornado avviato su http://localhost:8888")
 
+    MasterThread(stop_event).start()
+
     await asyncio.Event().wait()
-
-""" START THREADS """
-async def start_threads(n_threads):
-    # Setup e start control thread
-
-
-
-
-
-        t_match.start()
 
 
 if __name__ == "__main__":
-    stop_event = threading.Event()
     asyncio.run(main())
-    asyncio.run(start_threads(8))

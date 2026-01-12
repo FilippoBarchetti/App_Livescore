@@ -1,0 +1,21 @@
+body {
+    background-color: #0B2A33;
+    margin: 0;
+}
+.div_title {
+    background-color: #05161C;
+    padding: 2%;
+    margin-bottom: 4%;
+}
+.div_match {
+    margin: 0 auto;
+    margin-top: 1%;
+    width: 60%;
+    padding: 0.1%;
+    border-radius: 20px;
+    background-color: #05161C;
+}
+h1 {
+    color: white;
+    text-align: center;
+}
