@@ -23,6 +23,7 @@ async def setup_db():
     # Setup teams collection
     # Lettura file coi dati da inserire nel Database (teams)
     async with aiofiles.open(file_teams) as f:
+        await client.drop_database("AppLivescore_db")
         try:
             string_teams = await f.read()
         except FileNotFoundError:
