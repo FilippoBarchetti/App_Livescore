@@ -50,14 +50,12 @@ class Match():
                 string_seconds = f"0{self.seconds % 60}"
 
 
-            # Blocco la generazione di eventi (goal, falli...) se c'è la pausa
-            if not self.time_out:
-                # Simulazione punteggio
-                random_n = random.randint(0, 10000)
-                if random_n < 10:
-                    self.punteggio1 += 1
-                elif 9 < random_n < 20:
-                    self.punteggio2 += 1
+            # Simulazione punteggio
+            random_n = random.randint(0, 10000)
+            if random_n < 10:
+                self.punteggio1 += 1
+            elif 9 < random_n < 20:
+                self.punteggio2 += 1
 
 
             # Creazione e invio payload
@@ -126,16 +124,16 @@ class WSHandler(tornado.websocket.WebSocketHandler):
                 print(f"MasterThread match {i}   n_threads: {self.n_teams}, team1: {team1}, team2: {team2}")
                 match = Match(i + 1, team1, team2)
                 if not start_together:
-                    # TODO
-                    await asyncio.sleep(random.randrange(simulation_speed//500)) # Range di 5s massimo
+                    await asyncio.sleep(random.randint(0, 10)*simulation_speed/1000) # Range da 0s a 10s
                 self.task_match_simulator = asyncio.create_task(match.simulate())
                 running_tasks.append(self.task_match_simulator)
                 print(f"Avviata task {i}")
             await asyncio.gather(*running_tasks)
+            await asyncio.sleep(simulation_speed/200) # Aspetto 5s prima di fare partire il giro dopo
             print("finito primo giro")
 
             # Concluso campionato
-            if self.n_teams == 2:
+            if self.n_teams == 1:
                 l_winners = l_teams.copy()
                 concluded_matches = 0
                 running_tasks.clear()
@@ -158,6 +156,7 @@ async def main():
             (r"/ws", WSHandler),
         ],
         template_path="templates",
+        static_path="static"
     )
 
     app.listen(8000)
