@@ -28,11 +28,15 @@
     </style>
 </head>
 <body>
-    <script>
-        let socket = null;
 
-        document.getElementById("start").onmessage = () => {
-            socket = new WebSocket("ws://localhost:8001/ws");
+    <div class="div_title" >
+        <h1 class="title">Live Hockey Inline Matches Italy</h1>
+    </div>
+    <div class="div_match" >
+        <h1 class="title" id="gg">Match 1</h1>
+    </div>
+    <script>
+            const socket = new WebSocket("ws://localhost:8000/ws");
 
             socket.onopen = () => {
                 console.log("WebSocket aperto");
@@ -41,44 +45,16 @@
 
             socket.onmessage = (event) => {
                 const data = JSON.parse(event.data);
-                if (data["new"] === "yes"){
-                    document.getElementById("gg").innerHTML = "tyetevt"
-                }
+                document.getElementById("gg").innerHTML = "tyetevt"
+
 
             };
 
             socket.onclose = () => {
                 console.log("WebSocket chiuso");
             };
-        };
-    </script>
-    <div class="div_title" id="gg">
-        <h1 class="title">Live Hockey Inline Matches Italy</h1>
-    </div>
-    <div class="div_match">
-        <h3 class="title">Match</h3>
-    </div>
-    <div class="div_match">
-        <h3 class="title">Match</h3>
-    </div>
-    <div class="div_match">
-        <h3 class="title">Match</h3>
-    </div>
-    <div class="div_match">
-        <h3 class="title">Match</h3>
-    </div>
-    <div class="div_match">
-        <h3 class="title">Match</h3>
-    </div>
-    <div class="div_match">
-        <h3 class="title">Match</h3>
-    </div>
-    <div class="div_match">
-        <h3 class="title">Match</h3>
-    </div>
-    <div class="div_match">
-        <h3 class="title">Match</h3>
-    </div>
+
+        </script>
 
 </body>
 </html>
