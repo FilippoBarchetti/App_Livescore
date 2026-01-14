@@ -28,24 +28,43 @@
     </style>
 </head>
 <body>
-
     <div class="div_title" >
         <h1 class="title">Live Hockey Inline Matches Italy</h1>
     </div>
-    <div class="div_match" >
-        <h1 class="title" id="gg">Match 1</h1>
-    </div>
+
+    <div id="matches"></div>
+
     <script>
             const socket = new WebSocket("ws://localhost:8000/ws");
+            const container = document.getElementById("matches");
+            let n_matches = 0;
 
             socket.onopen = () => {
                 console.log("WebSocket aperto");
-
             };
 
             socket.onmessage = (event) => {
                 const data = JSON.parse(event.data);
-                document.getElementById("gg").innerHTML = "tyetevt"
+
+                if(data.phase_terminated){
+                    container.innerHTML = "";
+                    n_matches = data.n_matches;
+                    for(let i=0; i < n_matches; i++) {
+                        const div = document.createElement("div");
+                        div.className = "div_match";
+                        div.id = `div_${i + 1}`;
+                        container.appendChild(div);
+                        const div_content = document.createElement("h1");
+                        div_content.className = "title";
+                        div_content.id = `content_${i + 1}`;
+                        div.appendChild(div_content);
+                    }
+                }
+                else{
+                    document.getElementById(data.content_id).innerHTML = `${data.time} - ${data.teams} - ${data.points}`;
+                }
+
+
 
 
             };

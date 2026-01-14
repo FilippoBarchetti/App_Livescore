@@ -1,10 +1,14 @@
 import asyncio
 import random
 import logging
+from asyncio import gather
+
 import tornado.web
 import tornado.websocket
 import json
-from file_config import simulation_speed, teams, general, l_teams
+from file_config import simulation_speed, teams, general, l_teams, start_together
+
+logger = logging.getLogger(__name__)
 
 # Lista utilizzata per creare i threads che simulato le partite, quando tutti i threads sono partiti
 # la lista è vuota ma quando terminano tutti sarà riempita con i nomi dei vincitori, quindi
@@ -25,22 +29,63 @@ def broadcast_message(message):
     print("Invio")
 
 class Match():
-    def __init__(self, n, team1, team2):
+    def __init__(self, id, team1, team2):
         self.team1 = team1
         self.team2 = team2
-        self.name = f"Match {n}"
+        self.punteggio1 = 0
+        self.punteggio2 = 0
+        self.id = id
         self.loop = True
+        self.time_out = False
         self.seconds = 0
 
     async def simulate(self):
         while self.loop:
+            # Formattazione messaggio orologio
+            string_minutes = f"{self.seconds // 60}"
+            string_seconds = f"{self.seconds % 60}"
+            if self.seconds // 60 < 10:
+                string_minutes = f"0{self.seconds // 60}"
+            if self.seconds % 60 < 10:
+                string_seconds = f"0{self.seconds % 60}"
+
+
+            # Blocco la generazione di eventi (goal, falli...) se c'è la pausa
+            if not self.time_out:
+                # Simulazione punteggio
+                random_n = random.randint(0, 10000)
+                if random_n < 10:
+                    self.punteggio1 += 1
+                elif 9 < random_n < 20:
+                    self.punteggio2 += 1
+
+
+            # Creazione e invio payload
             payload = {
-                "time": f"{self.seconds // 60}:{self.seconds % 60}",
+                "phase_terminated": False,
+                "div_id": f"div_{self.id}",
+                "content_id": f"content_{self.id}",
+                "time": f"{string_minutes}:{string_seconds}",
                 "teams": f"{self.team1} vs {self.team2}",
-                "new": "no"
+                "points": f"[{self.punteggio1} - {self.punteggio2}]"
             }
             broadcast_message(payload)
-            await asyncio.sleep(simulation_speed)
+
+            # Controllo se è ora del time-out (dopo 20 min)
+            if self.seconds == 1200:
+                # Aspetto 10 minuti = 600s -> (sim_speed//1000)*600 = (sim_speed*3)//5
+                await asyncio.sleep(simulation_speed*3/5)
+
+            # Controllo se la partita è finita
+            if self.seconds == 2400:
+                if self.punteggio1 > self.punteggio2:
+                    l_winners.append(self.team1)
+                else:
+                    l_winners.append(self.team2)
+                self.loop = False
+
+            # Attesa e incremento timer
+            await asyncio.sleep(simulation_speed/1000)
             print(payload, f"match {self.team1} vs {self.team2}")
             self.seconds += 1
 
@@ -54,7 +99,6 @@ class WSHandler(tornado.websocket.WebSocketHandler):
     task_match_simulator = ""
     loop_manager = False
     loop_match_simulator = False
-    manager_is_blocked = False
     n_teams = 16
 
     def check_origin(self, origin):
@@ -67,29 +111,35 @@ class WSHandler(tornado.websocket.WebSocketHandler):
         self.task_manager = asyncio.create_task(self.manager())
 
     async def manager(self):
-        global l_winners, concluded_matches
+        global l_winners, concluded_matches, running_tasks
         while self.loop_manager:
-            if not self.manager_is_blocked:
-                self.n_teams //= 2
-                for i in range(self.n_teams):
-                    team1 = l_winners.pop(random.randrange(len(l_winners)))
-                    team2 = l_winners.pop(random.randrange(len(l_winners)))
-                    print(f"MasterThread match {i}   n_threads: {self.n_teams}, team1: {team1}, team2: {team2}")
-                    await self.write_message({"teams": f"{team1} vs {team2}", "new": "yes"})
-                    match = Match(i + 1, team1, team2)
-                    self.task_match_simulator = asyncio.create_task(match.simulate())
-                    print(f"Avviata task {i}")
-                    self.manager_is_blocked = True
+            self.n_teams //= 2
 
-            else:
-                # Conclusa una fase del campionato
-                if concluded_matches == self.n_teams//2:
-                    self.manager_is_blocked = False
-                # Concluso campionato
-                if self.n_teams == 2:
-                    l_winners = l_teams.copy()
-                    concluded_matches = 0
-                    self.manager_is_blocked = False
+            payload = {
+                "phase_terminated": True,
+                "n_matches": self.n_teams}
+            broadcast_message(payload)
+
+            for i in range(self.n_teams):
+                team1 = l_winners.pop(random.randrange(len(l_winners)))
+                team2 = l_winners.pop(random.randrange(len(l_winners)))
+                print(f"MasterThread match {i}   n_threads: {self.n_teams}, team1: {team1}, team2: {team2}")
+                match = Match(i + 1, team1, team2)
+                if not start_together:
+                    # TODO
+                    await asyncio.sleep(random.randrange(simulation_speed//500)) # Range di 5s massimo
+                self.task_match_simulator = asyncio.create_task(match.simulate())
+                running_tasks.append(self.task_match_simulator)
+                print(f"Avviata task {i}")
+            await asyncio.gather(*running_tasks)
+            print("finito primo giro")
+
+            # Concluso campionato
+            if self.n_teams == 2:
+                l_winners = l_teams.copy()
+                concluded_matches = 0
+                running_tasks.clear()
+                self.n_teams = 16
 
 
 

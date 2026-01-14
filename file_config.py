@@ -6,10 +6,10 @@ import aiofiles
 
 """ General Setup """
 # Variabile configurare la velocità di simulazione del codice
-# 1 <= simulation_speed <= 1000
-simulation_speed = 1
+# 1000: 1s (tempo normale) - 500: 0,5s (2x) - 2000: 2s (doppiamente lento)
+simulation_speed = 1 #1s
 file_teams = "hockey_teams.json"
-
+start_together = True
 
 """ Setup Database """
 # Setup generale Database
