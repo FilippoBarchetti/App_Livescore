@@ -28,6 +28,39 @@ def broadcast_message(message):
             logging.error(f"Errore invio: {e}")
     print("Invio")
 
+async def choose_players(team):
+    players = {
+        "goalkeeper": "",
+        "reserve_goalkeeper": "",
+        "forwards": "",
+        "reserve_forwards": "",
+        "defenders": "",
+        "reserve_defenders": "",
+    }
+    # Goalkeepers
+    goalkeepers = await team.find_one({"name": team})["goalkeepers"]
+    players["goalkeeper"] = goalkeepers.pop(random.randrange(len(goalkeepers)))
+    players["reserve_goalkeeper"] = goalkeepers.pop(random.randrange(len(goalkeepers)))
+
+    # Forwards
+    forwards_cursor = await team.find({"name": team})["forwards"]
+    forwards = await forwards_cursor.to_list(length=None)
+    for _ in range(2):
+        players["forwards"] = forwards.pop(random.randrange(len(forwards)))
+    for _ in range(4):
+        players["reserve_forwards"] = forwards.pop(random.randrange(len(forwards)))
+
+    # Defenders
+    defenders_cursor = await team.find({"name": team})["defenders"]
+    defenders = await defenders_cursor.to_list(length=None)
+    for _ in range(2):
+        players["defenders"] = defenders.pop(random.randrange(len(defenders)))
+    for _ in range(4):
+        players["reserve_defenders"] = defenders.pop(random.randrange(len(defenders)))
+
+    return players
+
+
 class Match():
     def __init__(self, id, team1, team2):
         self.team1 = team1
@@ -38,6 +71,8 @@ class Match():
         self.loop = True
         self.time_out = False
         self.seconds = 0
+        self.players1 = asyncio.run(choose_players(self.team1))
+        self.players2 = asyncio.run(choose_players(self.team2))
 
     async def simulate(self):
         while self.loop:
@@ -61,11 +96,13 @@ class Match():
             # Creazione e invio payload
             payload = {
                 "phase_terminated": False,
-                "div_id": f"div_{self.id}",
-                "content_id": f"content_{self.id}",
+                "id": {self.id},
                 "time": f"{string_minutes}:{string_seconds}",
-                "teams": f"{self.team1} vs {self.team2}",
-                "points": f"[{self.punteggio1} - {self.punteggio2}]"
+                "team1": self.team1,
+                "team2": self.team2,
+                "points": f"[{self.punteggio1} - {self.punteggio2}]",
+                "players1": self.players1,
+                "players2": self.players2
             }
             broadcast_message(payload)
 
@@ -90,6 +127,11 @@ class Match():
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
         self.render("main.html")
+
+
+class DetailHandler(tornado.web.RequestHandler):
+    def get(self, id):
+        self.render("detail.html", id=id)
 
 
 class WSHandler(tornado.websocket.WebSocketHandler):
@@ -153,6 +195,7 @@ async def main():
     app = tornado.web.Application(
         [
             (r"/", MainHandler),
+            (r"/detail/([0-9]+)", DetailHandler),
             (r"/ws", WSHandler),
         ],
         template_path="templates",

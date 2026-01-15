@@ -2,9 +2,41 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Dettaglio match</title>
+    <title>Live Hockey Matches</title>
+    <link rel="stylesheet" href="/static/styles.css">
 </head>
 <body>
+    <div class="div_title" >
+        <h1 class="title">Live Hockey Inline Matches Italy</h1>
+    </div>
+
+    <div id="details">
+        <div id="id_team1" class="team_detail"> <h1 id="gg1"></h1> </div>
+        <div id="id_team2" class="team_detail"> <h1 id="gg2"></h1> </div>
+    </div>
+
+    <script>
+            const socket = new WebSocket("ws://localhost:8000/ws");
+            const container = document.getElementById("matches");
+
+            socket.onopen = () => {
+                console.log("WebSocket aperto");
+            };
+
+            socket.onmessage = (event) => {
+                const data = JSON.parse(event.data);
+                document.getElementById("id_team1").innerHTML = data.players1;
+                document.getElementById("id_team2").innerHTML = data.players2;
+
+
+
+            };
+
+            socket.onclose = () => {
+                console.log("WebSocket chiuso");
+            };
+
+        </script>
 
 </body>
 </html>
