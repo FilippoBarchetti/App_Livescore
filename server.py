@@ -23,9 +23,11 @@ logger = logging.getLogger(__name__)
 def broadcast_message(message, id=None):
     """Invia un messaggio JSON a tutti i client connessi"""
     # Quando sono nella pagina di dettaglio, mando solo il messaggio relativo a quella partita
+    print(current_id)
     if current_id and id != current_id:
         return
     # Non ho specificato l'id quindi sono nella pagina principale e mando a tutti
+    print("invio")
     for client in connected_clients:
         try:
             client.write_message(json.dumps(message))
@@ -199,7 +201,7 @@ class WSHandler(tornado.websocket.WebSocketHandler):
                 team1 = l_winners.pop(random.randrange(len(l_winners)))
                 print("fatto?")
                 team2 = l_winners.pop(random.randrange(len(l_winners)))
-                match = Match(i + 1, team1, team2) # Creo oggetto match
+                match = Match(str(i + 1), team1, team2) # Creo oggetto match
                 # Richiamo metodo per generare randomicamente i giocatori dei match
                 print("gg1")
                 await match.init_players()

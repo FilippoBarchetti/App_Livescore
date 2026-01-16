@@ -22,6 +22,7 @@
             };
 
             socket.onmessage = (event) => {
+                console.log("GG");
                 const data = JSON.parse(event.data);
 
                 if(data.phase_terminated){

@@ -10,14 +10,20 @@
         <h1 class="title">Live Hockey Inline Matches Italy</h1>
     </div>
 
+   <button id="MyButton" class="button">Go back</button>
+
     <div id="details">
-        <div id="div_team1" class="team_detail"> <h1 id="content_team1"></h1> </div>
-        <div id="div_team2" class="team_detail"> <h1 id="content_team2"></h1> </div>
+        <div id="div_team1" class="team_detail"> <h1 id="content_team1"> GG </h1> </div>
+        <div id="div_team2" class="team_detail"> <h1 id="content_team2"> GG </h1> </div>
     </div>
 
     <script>
             const socket = new WebSocket("ws://localhost:8000/ws");
-            const container = document.getElementById("details");
+            //const container = document.getElementById("details");
+
+            document.getElementById("MyButton").onclick = function() {
+                window.location.href = `/`;
+            };
 
             socket.onopen = () => {
                 console.log("WebSocket aperto");
@@ -25,18 +31,16 @@
 
             socket.onmessage = (event) => {
                 const data = JSON.parse(event.data);
-                document.getElementById("content_team1").innerText = JSON.stringify(data.players1, null, 2);
-                document.getElementById("content_team2").innerText = JSON.stringify(data.players2, null, 2);
 
-
-
+                document.getElementById("content_team1").innerHTML = data.players1;
+                document.getElementById("content_team2").innerHTML = data.players2;
             };
 
             socket.onclose = () => {
                 console.log("WebSocket chiuso");
             };
 
-        </script>
+    </script>
 
 </body>
 </html>
