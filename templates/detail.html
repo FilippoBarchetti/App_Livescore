@@ -12,9 +12,37 @@
 
    <button id="MyButton" class="button">Go back</button>
 
-    <div id="details">
-        <div id="div_team1" class="team_detail"> <h1 id="content_team1"> GG </h1> </div>
-        <div id="div_team2" class="team_detail"> <h1 id="content_team2"> GG </h1> </div>
+    <div id="details" class="class_details">
+        <div id="div_team1" class="team_detail">
+            <h1 style="color: gold" id="team1_details_title"> team1 </h1>
+            <h1 style="color: gold"> - - - Goalkeeper - - - </h1>
+            <h1 id="goalkeeper_team1"> </h1>
+            <h1 style="color: gold"> - - - Reserve Goalkeeper - - - </h1>
+            <h1 id="reserve_goalkeeper_team1"> </h1>
+            <h1 style="color: gold"> - - - Defenders - - -</h1>
+            <h1 id="defenders_team1"> </h1>
+            <h1 style="color: gold"> - - - Reserve Defenders - - - </h1>
+            <h1 id="reserve_defenders_team1"> </h1>
+            <h1 style="color: gold"> - - - Forwards - - - </h1>
+            <h1 id="forwards_team1"> </h1>
+            <h1 style="color: gold"> - - - Reserve Forwards - - - </h1>
+            <h1 id="reserve_forwards_team1"> </h1>
+        </div>
+        <div id="div_team2" class="team_detail">
+            <h1 style="color: gold" id="team2_details_title"> team2 </h1>
+            <h1 style="color: gold"> - - - Goalkeeper - - - </h1>
+            <h1 id="goalkeeper_team2"> </h1>
+            <h1 style="color: gold"> - - - Reserve Goalkeeper - - - </h1>
+            <h1 id="reserve_goalkeeper_team2"> </h1>
+            <h1 style="color: gold"> - - - Defenders - - -</h1>
+            <h1 id="defenders_team2"> </h1>
+            <h1 style="color: gold"> - - - Reserve Defenders - - - </h1>
+            <h1 id="reserve_defenders_team2"> </h1>
+            <h1 style="color: gold"> - - - Forwards - - - </h1>
+            <h1 id="forwards_team2"> </h1>
+            <h1 style="color: gold"> - - - Reserve Forwards - - - </h1>
+            <h1 id="reserve_forwards_team2"> </h1>
+        </div>
     </div>
 
     <script>
@@ -31,9 +59,25 @@
 
             socket.onmessage = (event) => {
                 const data = JSON.parse(event.data);
+                console.log(data);
+                console.log(data.players1.defenders);
+                // Team 1
+                document.getElementById("team1_details_title").innerHTML = data.team1;
+                document.getElementById("goalkeeper_team1").innerHTML = data.players1.goalkeeper;
+                document.getElementById("reserve_goalkeeper_team1").innerHTML = data.players1.reserve_goalkeeper;
+                document.getElementById("defenders_team1").innerHTML = data.players1.defenders;
+                document.getElementById("reserve_defenders_team1").innerHTML = data.players1.reserve_defenders;
+                document.getElementById("forwards_team1").innerHTML = data.players1.forwards;
+                document.getElementById("reserve_forwards_team1").innerHTML = data.players1.reserve_forwards;
 
-                document.getElementById("content_team1").innerHTML = data.players1;
-                document.getElementById("content_team2").innerHTML = data.players2;
+                // Team 2
+                document.getElementById("team2_details_title").innerHTML = data.team2;
+                document.getElementById("goalkeeper_team2").innerHTML = data.players2.goalkeeper;
+                document.getElementById("reserve_goalkeeper_team2").innerHTML = data.players2.reserve_goalkeeper;
+                document.getElementById("defenders_team2").innerHTML = data.players2.defenders;
+                document.getElementById("reserve_defenders_team2").innerHTML = data.players2.reserve_defenders;
+                document.getElementById("forwards_team2").innerHTML = data.players2.forwards;
+                document.getElementById("reserve_forwards_team2").innerHTML = data.players2.reserve_forwards;
             };
 
             socket.onclose = () => {

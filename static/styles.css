@@ -91,23 +91,22 @@ h1 {
 
 .team_detail{
     margin: 0 auto;
-    margin-top: 1%;
-    width: 45%;
+    margin-top: 5%;
+    width: 30%;
+    height: 90%;
     padding: 0.1%;
     border-radius: 20px;
     background-color: #05161C;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.5%;
     transition: transform 0.3s ease;
+    flex-direction: column
 }
 
 .button {
     margin: 0 auto;
-    margin-top: 1%;
     width: 5%;
-    padding: 0.1%;
     border-radius: 20px;
     background-color: #05161C;
     display: flex;
@@ -118,5 +117,11 @@ h1 {
     color: gold;
     border: 2px solid gold;
     text-align: center;
+    justify-content: center;
+}
+
+.class_details {
+    display: flex;
+    gap: 0.01%;
     justify-content: center;
 }

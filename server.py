@@ -38,20 +38,17 @@ def broadcast_message(message, id=None):
 
 async def choose_players(team):
     players = {
-        "goalkeeper": [],
-        "reserve_goalkeeper": [],
-        "forwards": [],
-        "reserve_forwards": [],
-        "defenders": [],
-        "reserve_defenders": [],
+        "goalkeeper": "",
+        "reserve_goalkeeper": "",
+        "forwards": "",
+        "reserve_forwards": "",
+        "defenders": "",
+        "reserve_defenders": "",
     }
-    """    doc_team = await teams.find_one({"name": team})
-    goalkeepers = doc_team["players"]["goalkeepers"].copy()
-    forwards = doc_team["players"]["forwards"].copy()
-    defenders = doc_team["players"]["defenders"].copy()"""
+
+    l = []
 
     doc_team = await teams.find_one({"name": team})
-    print("ok")
     players_data = doc_team.get("players", {})
     # Creiamo COPIE degli array per non modificare il documento originale
     goalkeepers = players_data.get("goalkeepers", []).copy()
@@ -59,21 +56,28 @@ async def choose_players(team):
     defenders = players_data.get("defenders", []).copy()
 
     # Goalkeepers
-    players["goalkeeper"].append(goalkeepers.pop(random.randrange(len(goalkeepers))))
-    players["reserve_goalkeeper"].append(goalkeepers.pop(random.randrange(len(goalkeepers))))
+    players["goalkeeper"] = goalkeepers.pop(random.randrange(len(goalkeepers)))
+    players["reserve_goalkeeper"] = goalkeepers.pop(random.randrange(len(goalkeepers)))
 
     # Forwards
     for _ in range(2):
-        players["forwards"].append(forwards.pop(random.randrange(len(forwards))))
+        l.append(forwards.pop(random.randrange(len(forwards))))
+    players["forwards"] = ", ".join(l)
+    l.clear()
     for _ in range(4):
-        players["reserve_forwards"].append(forwards.pop(random.randrange(len(forwards))))
+        l.append(forwards.pop(random.randrange(len(forwards))))
+    players["reserve_forwards"] = ", ".join(l)
+    l.clear()
 
     # Defenders
     for _ in range(2):
-        players["defenders"].append(defenders.pop(random.randrange(len(defenders))))
+        l.append(defenders.pop(random.randrange(len(defenders))))
+    players["defenders"] = ", ".join(l)
+    l.clear()
     for _ in range(4):
-        players["reserve_defenders"].append(defenders.pop(random.randrange(len(defenders))))
-
+        l.append(defenders.pop(random.randrange(len(defenders))))
+    players["reserve_defenders"] = ", ".join(l)
+    l.clear()
     return players
 
 
