@@ -1,5 +1,4 @@
-paho-mqtt
 tornado
-aiomqtt
 pymongo
 aiofiles
+motor

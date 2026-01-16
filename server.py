@@ -18,9 +18,12 @@ connected_clients = set()
 
 running_tasks = []
 concluded_matches = 0
+current_id = 0
 
-def broadcast_message(message):
+def broadcast_message(message, id=None):
     """Invia un messaggio JSON a tutti i client connessi"""
+    if id and id != current_id:
+        return
     for client in connected_clients:
         try:
             client.write_message(json.dumps(message))
@@ -30,35 +33,46 @@ def broadcast_message(message):
 
 async def choose_players(team):
     players = {
-        "goalkeeper": "",
-        "reserve_goalkeeper": "",
-        "forwards": "",
-        "reserve_forwards": "",
-        "defenders": "",
-        "reserve_defenders": "",
+        "goalkeeper": [],
+        "reserve_goalkeeper": [],
+        "forwards": [],
+        "reserve_forwards": [],
+        "defenders": [],
+        "reserve_defenders": [],
     }
+    """    doc_team = await teams.find_one({"name": team})
+    goalkeepers = doc_team["players"]["goalkeepers"].copy()
+    forwards = doc_team["players"]["forwards"].copy()
+    defenders = doc_team["players"]["defenders"].copy()"""
+
+    doc_team = await teams.find_one({"name": team})
+    players_data = doc_team.get("players", {})
+    # Creiamo COPIE degli array per non modificare il documento originale
+    goalkeepers = players_data.get("goalkeepers", []).copy()
+    forwards = players_data.get("forwards", []).copy()
+    defenders = players_data.get("defenders", []).copy()
+
+    print(doc_team)
+
     # Goalkeepers
-    goalkeepers = await team.find_one({"name": team})["goalkeepers"]
-    players["goalkeeper"] = goalkeepers.pop(random.randrange(len(goalkeepers)))
-    players["reserve_goalkeeper"] = goalkeepers.pop(random.randrange(len(goalkeepers)))
+    players["goalkeeper"].append(goalkeepers.pop(random.randrange(len(goalkeepers))))
+    players["reserve_goalkeeper"].append(goalkeepers.pop(random.randrange(len(goalkeepers))))
 
     # Forwards
-    forwards_cursor = await team.find({"name": team})["forwards"]
-    forwards = await forwards_cursor.to_list(length=None)
     for _ in range(2):
-        players["forwards"] = forwards.pop(random.randrange(len(forwards)))
+        players["forwards"].append(forwards.pop(random.randrange(len(forwards))))
     for _ in range(4):
-        players["reserve_forwards"] = forwards.pop(random.randrange(len(forwards)))
+        players["reserve_forwards"].append(forwards.pop(random.randrange(len(forwards))))
 
     # Defenders
-    defenders_cursor = await team.find({"name": team})["defenders"]
-    defenders = await defenders_cursor.to_list(length=None)
     for _ in range(2):
-        players["defenders"] = defenders.pop(random.randrange(len(defenders)))
+        players["defenders"].append(defenders.pop(random.randrange(len(defenders))))
     for _ in range(4):
-        players["reserve_defenders"] = defenders.pop(random.randrange(len(defenders)))
+        players["reserve_defenders"].append(defenders.pop(random.randrange(len(defenders))))
 
+    print(players)
     return players
+
 
 
 class Match():
@@ -67,12 +81,17 @@ class Match():
         self.team2 = team2
         self.punteggio1 = 0
         self.punteggio2 = 0
+        self.players1 = {}
+        self.players2 = {}
         self.id = id
         self.loop = True
         self.time_out = False
         self.seconds = 0
-        self.players1 = asyncio.run(choose_players(self.team1))
-        self.players2 = asyncio.run(choose_players(self.team2))
+
+    async def init_players(self):
+        print("init_players")
+        self.players1 = await choose_players(self.team1)
+        self.players2 = await choose_players(self.team2)
 
     async def simulate(self):
         while self.loop:
@@ -96,7 +115,7 @@ class Match():
             # Creazione e invio payload
             payload = {
                 "phase_terminated": False,
-                "id": {self.id},
+                "id": self.id,
                 "time": f"{string_minutes}:{string_seconds}",
                 "team1": self.team1,
                 "team2": self.team2,
@@ -104,7 +123,7 @@ class Match():
                 "players1": self.players1,
                 "players2": self.players2
             }
-            broadcast_message(payload)
+            broadcast_message(payload, self.id)
 
             # Controllo se è ora del time-out (dopo 20 min)
             if self.seconds == 1200:
@@ -126,7 +145,9 @@ class Match():
 
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
+        global current_id
         self.render("main.html")
+        current_id = -1
 
 
 class DetailHandler(tornado.web.RequestHandler):
@@ -165,6 +186,7 @@ class WSHandler(tornado.websocket.WebSocketHandler):
                 team2 = l_winners.pop(random.randrange(len(l_winners)))
                 print(f"MasterThread match {i}   n_threads: {self.n_teams}, team1: {team1}, team2: {team2}")
                 match = Match(i + 1, team1, team2)
+                await match.init_players()
                 if not start_together:
                     await asyncio.sleep(random.randint(0, 10)*simulation_speed/1000) # Range da 0s a 10s
                 self.task_match_simulator = asyncio.create_task(match.simulate())

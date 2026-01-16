@@ -32,6 +32,23 @@ h1 {
     color: white;
     text-align: center;
 }
+.time {
+    text-align: left;
+    flex: 1;
+}
+.teams {
+    text-align: center;
+    flex: 2;
+}
+.points {
+    text-align: right;
+    flex: 1;
+}
+.div_match h1 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
 .time {
     flex: 1;

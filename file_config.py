@@ -1,4 +1,4 @@
-from pymongo import AsyncMongoClient
+from motor.motor_asyncio import AsyncIOMotorClient
 import json
 import asyncio
 import aiofiles
@@ -7,23 +7,23 @@ import aiofiles
 """ General Setup """
 # Variabile configurare la velocità di simulazione del codice
 # 1000: 1s (tempo normale) - 500: 0,5s (2x) - 2000: 2s (doppiamente lento)
-simulation_speed = 0.5 #1s
+simulation_speed = 1000 #1s
 file_teams = "hockey_teams.json"
 start_together = False
 
 """ Setup Database """
 # Setup generale Database
-client = AsyncMongoClient("mongodb://localhost:27017/")
+client = AsyncIOMotorClient("mongodb://localhost:27017")
 db = client["AppLivescore_db"]
 teams = db["teams"]
 general = db["general_info"]
 l_teams = []
 
 async def setup_db():
+    await client.drop_database("AppLivescore_db")
     # Setup teams collection
     # Lettura file coi dati da inserire nel Database (teams)
     async with aiofiles.open(file_teams) as f:
-        await client.drop_database("AppLivescore_db")
         try:
             string_teams = await f.read()
         except FileNotFoundError:
