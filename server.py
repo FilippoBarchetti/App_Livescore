@@ -2,34 +2,37 @@ import asyncio
 import random
 import logging
 from asyncio import gather
-
 import tornado.web
 import tornado.websocket
 import json
-from file_config import simulation_speed, teams, general, l_teams, start_together
+from file_config import simulation_speed, teams, l_teams, start_together, setup_db
 
+
+
+# Lista usata per creare tasks che simulano le partite, la lista viene svuotata durante la creazione
+# delle tasks e riempita con i nomi dei vincitori al termine delle medesime tasks
+l_winners = []
+connected_clients = set() # Clients connessi
+running_tasks = [] # Lista contenente le task attive
+concluded_matches = 0 # Contatore per match terminati
+current_id = None # id del match mostrato in details.html
 logger = logging.getLogger(__name__)
 
-# Lista utilizzata per creare i threads che simulato le partite, quando tutti i threads sono partiti
-# la lista è vuota ma quando terminano tutti sarà riempita con i nomi dei vincitori, quindi
-# la sua lunghezza sarà dimezzata
-l_winners = l_teams.copy()
-connected_clients = set()
 
-running_tasks = []
-concluded_matches = 0
-current_id = 0
 
 def broadcast_message(message, id=None):
     """Invia un messaggio JSON a tutti i client connessi"""
-    if id and id != current_id:
+    # Quando sono nella pagina di dettaglio, mando solo il messaggio relativo a quella partita
+    if not current_id and id != current_id:
         return
+    # Non ho specificato l'id quindi sono nella pagina principale e mando a tutti
     for client in connected_clients:
         try:
             client.write_message(json.dumps(message))
         except Exception as e:
-            logging.error(f"Errore invio: {e}")
-    print("Invio")
+            logger.error(e)
+
+
 
 async def choose_players(team):
     players = {
@@ -46,13 +49,12 @@ async def choose_players(team):
     defenders = doc_team["players"]["defenders"].copy()"""
 
     doc_team = await teams.find_one({"name": team})
+    print("ok")
     players_data = doc_team.get("players", {})
     # Creiamo COPIE degli array per non modificare il documento originale
     goalkeepers = players_data.get("goalkeepers", []).copy()
     forwards = players_data.get("forwards", []).copy()
     defenders = players_data.get("defenders", []).copy()
-
-    print(doc_team)
 
     # Goalkeepers
     players["goalkeeper"].append(goalkeepers.pop(random.randrange(len(goalkeepers))))
@@ -70,7 +72,6 @@ async def choose_players(team):
     for _ in range(4):
         players["reserve_defenders"].append(defenders.pop(random.randrange(len(defenders))))
 
-    print(players)
     return players
 
 
@@ -85,11 +86,9 @@ class Match():
         self.players2 = {}
         self.id = id
         self.loop = True
-        self.time_out = False
         self.seconds = 0
 
     async def init_players(self):
-        print("init_players")
         self.players1 = await choose_players(self.team1)
         self.players2 = await choose_players(self.team2)
 
@@ -103,14 +102,12 @@ class Match():
             if self.seconds % 60 < 10:
                 string_seconds = f"0{self.seconds % 60}"
 
-
             # Simulazione punteggio
             random_n = random.randint(0, 10000)
             if random_n < 10:
                 self.punteggio1 += 1
             elif 9 < random_n < 20:
                 self.punteggio2 += 1
-
 
             # Creazione e invio payload
             payload = {
@@ -140,22 +137,31 @@ class Match():
 
             # Attesa e incremento timer
             await asyncio.sleep(simulation_speed/1000)
-            print(payload, f"match {self.team1} vs {self.team2}")
+            print(current_id, payload, f"match {self.team1} vs {self.team2}")
             self.seconds += 1
 
+
+
 class MainHandler(tornado.web.RequestHandler):
+    """ MainHandler """
     def get(self):
         global current_id
         self.render("main.html")
-        current_id = -1
+        current_id = None
+
 
 
 class DetailHandler(tornado.web.RequestHandler):
+    """ DetailHandler """
     def get(self, id):
-        self.render("detail.html", id=id)
+        global current_id
+        self.render("detail.html")
+        current_id = id
+
 
 
 class WSHandler(tornado.websocket.WebSocketHandler):
+    """ Ws Handler """
     task_manager = ""
     task_match_simulator = ""
     loop_manager = False
@@ -176,43 +182,61 @@ class WSHandler(tornado.websocket.WebSocketHandler):
         while self.loop_manager:
             self.n_teams //= 2
 
+            # Messaggio
             payload = {
                 "phase_terminated": True,
-                "n_matches": self.n_teams}
+                "n_matches": self.n_teams
+            }
             broadcast_message(payload)
+            print("messaggio inviato")
 
+            # Creazione e avvio match (task)
             for i in range(self.n_teams):
+                print(i)
+                print(l_winners)
+                print(random.randrange(len(l_winners)))
+                # Prendo ranodmicamente 2 team a caso
                 team1 = l_winners.pop(random.randrange(len(l_winners)))
+                print("fatto?")
                 team2 = l_winners.pop(random.randrange(len(l_winners)))
-                print(f"MasterThread match {i}   n_threads: {self.n_teams}, team1: {team1}, team2: {team2}")
-                match = Match(i + 1, team1, team2)
+                match = Match(i + 1, team1, team2) # Creo oggetto match
+                # Richiamo metodo per generare randomicamente i giocatori dei match
+                print("gg1")
                 await match.init_players()
+                print("gg2")
                 if not start_together:
                     await asyncio.sleep(random.randint(0, 10)*simulation_speed/1000) # Range da 0s a 10s
+                # Creo e avvio task col metodo simulate dell'oggetto match (avvio simulazione partita)
                 self.task_match_simulator = asyncio.create_task(match.simulate())
                 running_tasks.append(self.task_match_simulator)
-                print(f"Avviata task {i}")
+                logger.info("Avviata task {i}")
+
+
+            # Attendo che i match siano conclusi
             await asyncio.gather(*running_tasks)
             await asyncio.sleep(simulation_speed/200) # Aspetto 5s prima di fare partire il giro dopo
-            print("finito primo giro")
+            running_tasks.clear()
 
             # Concluso campionato
             if self.n_teams == 1:
                 l_winners = l_teams.copy()
                 concluded_matches = 0
-                running_tasks.clear()
                 self.n_teams = 16
-
-
 
     def on_close(self):
         connected_clients.discard(self)
         print("WebSocket chiuso")
 
 
-""" Main """
+
 async def main():
+    """ Main """
+    global l_winners
     logging.basicConfig(level=logging.INFO)
+
+    # Setup database
+    await setup_db()
+    l_winners = l_teams.copy()
 
     app = tornado.web.Application(
         [
@@ -226,8 +250,9 @@ async def main():
 
     app.listen(8000)
     print("Server Tornado avviato su http://localhost:8000")
-
     await asyncio.Event().wait()
+    #await asyncio.Future()
+
 
 
 if __name__ == "__main__":

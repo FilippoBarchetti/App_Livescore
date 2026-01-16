@@ -9,7 +9,7 @@ import aiofiles
 # 1000: 1s (tempo normale) - 500: 0,5s (2x) - 2000: 2s (doppiamente lento)
 simulation_speed = 1000 #1s
 file_teams = "hockey_teams.json"
-start_together = False
+start_together = True
 
 """ Setup Database """
 # Setup generale Database
@@ -36,4 +36,6 @@ async def setup_db():
     for team in dict_teams:
         l_teams.append(team["name"])
     await general.insert_one({"teams": l_teams})
-asyncio.run(setup_db())
+    print("fatto")
+    print(l_teams)
+#asyncio.run(setup_db())
