@@ -23,7 +23,7 @@ logger = logging.getLogger(__name__)
 def broadcast_message(message, id=None):
     """Invia un messaggio JSON a tutti i client connessi"""
     # Quando sono nella pagina di dettaglio, mando solo il messaggio relativo a quella partita
-    if not current_id and id != current_id:
+    if current_id and id != current_id:
         return
     # Non ho specificato l'id quindi sono nella pagina principale e mando a tutti
     for client in connected_clients:

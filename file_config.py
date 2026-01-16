@@ -16,7 +16,6 @@ start_together = True
 client = AsyncIOMotorClient("mongodb://localhost:27017")
 db = client["AppLivescore_db"]
 teams = db["teams"]
-general = db["general_info"]
 l_teams = []
 
 async def setup_db():
@@ -35,7 +34,3 @@ async def setup_db():
     # Setup general_info collection
     for team in dict_teams:
         l_teams.append(team["name"])
-    await general.insert_one({"teams": l_teams})
-    print("fatto")
-    print(l_teams)
-#asyncio.run(setup_db())

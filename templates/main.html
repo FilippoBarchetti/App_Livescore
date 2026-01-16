@@ -34,6 +34,10 @@
                         div.addEventListener("click", () => {
                             window.location.href = `/detail/${i + 1}`;
                         });
+                        div.innerHTML = `
+                            <span class="time"> --:-- </span>
+                            <span class="teams"> ... <br> <span class="vs"> vs </span> <br> ... </span>
+                            <span class="points"> [0 - 0] </span>`;
                         container.appendChild(div);
 
                     }
