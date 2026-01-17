@@ -1,7 +1,6 @@
 import asyncio
 import random
 import logging
-from asyncio import gather
 import tornado.web
 import tornado.websocket
 import json

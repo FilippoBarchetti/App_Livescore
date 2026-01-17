@@ -1,6 +1,5 @@
 from motor.motor_asyncio import AsyncIOMotorClient
 import json
-import asyncio
 import aiofiles
 
 
