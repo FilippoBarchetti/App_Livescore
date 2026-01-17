@@ -1,12 +1,12 @@
 from motor.motor_asyncio import AsyncIOMotorClient
 import json
 import aiofiles
-
+import os
 
 """ General Setup """
 # Variabile configurare la velocità di simulazione del codice
 # 1000: 1s (tempo normale) - 500: 0,5s (2x) - 2000: 2s (doppiamente lento)
-simulation_speed = 1 #1s
+simulation_speed = 1000 #1s
 file_teams = "hockey_teams.json"
 start_together = True
 
@@ -18,10 +18,12 @@ teams = db["teams"]
 l_teams = []
 
 async def setup_db():
-    await client.drop_database("AppLivescore_db")
+    #await client.drop_database("AppLivescore_db")
     # Setup teams collection
     # Lettura file coi dati da inserire nel Database (teams)
-    async with aiofiles.open(file_teams) as f:
+    backend_dir = os.path.dirname(os.path.abspath(__file__))
+    teams_path = os.path.join(backend_dir, file_teams)
+    async with aiofiles.open(teams_path) as f:
         try:
             string_teams = await f.read()
         except FileNotFoundError:
